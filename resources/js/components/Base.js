@@ -19,6 +19,10 @@ export default function Base() {
           // write other logic here such as disabling hamburger button
         }
       }
+
+      function handleSelect() {
+        console.log('handleSelect');
+      }
     
       React.useEffect(() => {
         window.addEventListener("resize", handleResize);
@@ -39,8 +43,14 @@ export default function Base() {
             <Nav
                 setSideNavExpanded={setSideNavExpanded}
                 sideNavExpanded={sideNavExpanded}
+
+                onSelect={handleSelect}
             />
-            <Box style={contentStyle}><Content /></Box>
+            <Box style={contentStyle}>
+                <Content
+                    gContent={"This is the content"}
+                />
+            </Box>
         </Router>
     );
 }

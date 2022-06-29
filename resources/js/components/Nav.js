@@ -8,6 +8,9 @@ import SideNav, {
 } from "@trendmicro/react-sidenav";
 import "@trendmicro/react-sidenav/dist/react-sidenav.css";
 
+import AccessAlarmIcon from '@mui/icons-material/AccessAlarm';
+import ListItemIcon from '@mui/material/ListItemIcon';
+
 export const SideBar = ({ sideNavExpanded, setSideNavExpanded }) => {
   return (
     <>
@@ -23,7 +26,7 @@ export const SideBar = ({ sideNavExpanded, setSideNavExpanded }) => {
             console.log('clicked');
           }}>
             <NavIcon>
-              <i className="fa fa-fw fa-home" style={{ fontSize: "1.75em" }} />
+                <AccessAlarmIcon />
             </NavIcon>
             <NavText>Home</NavText>
           </NavItem>
