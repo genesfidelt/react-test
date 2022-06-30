@@ -1,4 +1,5 @@
 import React from "react";
+import { useState, useEffect } from "react";
 import SideNav, {
   Toggle,
   Nav,
@@ -11,7 +12,32 @@ import "@trendmicro/react-sidenav/dist/react-sidenav.css";
 import AccessAlarmIcon from '@mui/icons-material/AccessAlarm';
 import ListItemIcon from '@mui/material/ListItemIcon';
 
-export const SideBar = ({ sideNavExpanded, setSideNavExpanded }) => {
+export default function SideBar ({ sideNavExpanded, setSideNavExpanded, changeContent }) {
+
+  const [ navList, setNavList ] = useState([]);
+  const [ selectedNav, setSelectedNav ] = useState("");
+
+  const createNavList = () => {
+    const nav = [
+      { 'label': 'Capital', 'link': '#capital', 'id': 'capital', 'access': 4 },
+      { 'label': 'Companies', 'link': '#companies', 'id': 'companies', 'access': 1 },
+    ];
+    return nav;
+  };
+
+  const handlerClickedNav = (e) => {
+    if (e.target.id === "") { return }
+    const page = e.target.id.split('-')[1];
+    setSelectedNav(page);
+    changeContent(page);
+  }
+
+  useEffect(() => {
+    const list = createNavList();
+    setNavList(list);
+    setSelectedNav(list[0].id);
+  }, []);
+
   return (
     <>
       <SideNav
@@ -21,28 +47,25 @@ export const SideBar = ({ sideNavExpanded, setSideNavExpanded }) => {
         expanded={sideNavExpanded}
       >
         <SideNav.Toggle />
-        <SideNav.Nav defaultSelected="home">
-          <NavItem eventKey="home" onClick={() => {
-            console.log('clicked');
-          }}>
-            <NavIcon>
-                <AccessAlarmIcon />
-            </NavIcon>
-            <NavText>Home</NavText>
-          </NavItem>
-          <NavItem eventKey="charts">
-            <NavIcon>
-              <i
-                className="fa fa-fw fa-line-chart"
-                style={{ fontSize: "1.75em" }}
-              />
-            </NavIcon>
-            <NavText>Charts</NavText>
-          </NavItem>
+        <SideNav.Nav defaultSelected={selectedNav}>
+          {
+            navList.map((item, index) => {
+              return (
+                <NavItem
+                eventKey={item.id}
+                  id={'item-' + item.id}
+                  onClick={handlerClickedNav}
+                >
+                  <NavIcon id={'navicon-' + item.id}>
+                    <AccessAlarmIcon id={'icon-' + item.id}/>
+                  </NavIcon>
+                  <NavText id={'text-' + item.id}>{item.label}</NavText>
+                </NavItem>
+              );
+            })
+          }
         </SideNav.Nav>
       </SideNav>
     </>
   );
 };
-
-export default SideBar;

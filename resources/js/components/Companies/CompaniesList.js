@@ -2,8 +2,8 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import Grid from '@mui/material/Grid';
 
-export default function Content({pageContent}) {
+export default function CompaniesList() {
     return (
-        <h1>{pageContent}</h1>
+        <h3>Companies Page</h3>
     );
 }
