@@ -2,9 +2,14 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import { useState, useEffect } from "react";
 
+import cookies from "js-cookie";
+
 import Box from '@mui/material/Box';
 
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
+
+import { TextField, Grid, Form, Button } from '@mui/material';
+import axios from 'axios';
 
 import Nav from './Nav';
 import CapitalHistoryList from './CapitalHistory/CapitalHistoryList';
@@ -15,6 +20,8 @@ export default function Base() {
   const [sideNavExpanded, setSideNavExpanded] = useState(true);
 
   const [content, setContent] = useState();
+
+  const [cookie, setCookie] = useState({});
 
   const handleResize = () => {
     // iPhone X width, for example
@@ -34,6 +41,7 @@ export default function Base() {
   } 
 
   useEffect(() => {
+    setCookie(cookies.get());
     window.addEventListener("resize", handleResize);
     handleResize(); // on-component-mount, check already to see if user has a small device
 
@@ -46,18 +54,21 @@ export default function Base() {
     marginLeft: sideNavExpanded ? "250px" : "70px", // arbitrary values
     transition: "margin 0.2s ease"
   };
-    
-  return (
-      <Router>
-        <Nav
-          setSideNavExpanded={setSideNavExpanded}
-          sideNavExpanded={sideNavExpanded}
-          changeContent={changeContent}
-        />
-        <Box style={contentStyle}>
-          { content }
-        </Box>
-      </Router>
+  console.log('cookie');
+  console.log(cookie)
+return (
+  <Router>
+
+    <Nav
+      setSideNavExpanded={setSideNavExpanded}
+      sideNavExpanded={sideNavExpanded}
+      changeContent={changeContent}
+    />
+    <Box style={contentStyle}>
+      { content }
+    </Box>
+
+  </Router>
   );
 }
 

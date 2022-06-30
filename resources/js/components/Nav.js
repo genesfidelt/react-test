@@ -19,8 +19,8 @@ export default function SideBar ({ sideNavExpanded, setSideNavExpanded, changeCo
 
   const createNavList = () => {
     const nav = [
-      { 'label': 'Capital', 'link': '#capital', 'id': 'capital', 'access': 4 },
-      { 'label': 'Companies', 'link': '#companies', 'id': 'companies', 'access': 1 },
+      { 'label': 'Capital', 'id': 'capital', 'access': 4 },
+      { 'label': 'Companies', 'id': 'companies', 'access': 1 },
     ];
     return nav;
   };

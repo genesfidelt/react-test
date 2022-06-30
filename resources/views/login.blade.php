@@ -10,8 +10,8 @@
     <div id="">
         <form action=" {!! url('/login') !!}" method="POST">
         @csrf
-            <input type="text">
-            <input type="password">
+            <input name="email" type="text">
+            <input name="password" type="password">
             <button type="submit">submit</button>
         </form>
     </div>

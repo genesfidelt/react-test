@@ -34,6 +34,9 @@
         "@mui/icons-material": "^5.8.4",
         "@mui/material": "^5.8.6",
         "@trendmicro/react-sidenav": "^0.5.0",
+        "js-cookie": "^3.0.1",
+        "js-cookies": "^1.0.4",
+        "react-cookie": "^4.1.1",
         "react-router-dom": "^6.3.0"
     }
 }
