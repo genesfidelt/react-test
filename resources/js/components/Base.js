@@ -1,96 +1,27 @@
-import React from 'react';
+import { React, useState, useEffect } from 'react';
 import ReactDOM from 'react-dom';
-import { useState, useEffect } from "react";
 
-import Cookies from "js-cookie";
-
-import Box from '@mui/material/Box';
-
-import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
-
-import { TextField, Grid, Form, Button } from '@mui/material';
+import Cookies from 'js-cookie'
 import axios from 'axios';
 
-import Nav from './Nav';
-import CapitalHistoryList from './CapitalHistory/CapitalHistoryList';
-import CompaniesList from './Companies/CompaniesList';
-import Login from './User/Login';
-import Logout from './User/Logout';
+import Login from './Login';
+import Page from './Page';
 
 export default function Base() {
-    
-  const [sideNavExpanded, setSideNavExpanded] = useState(true);
 
-  const [content, setContent] = useState();
+  const [ page, setPage ] = useState();
 
-  const [cookie, setCookie] = useState({});
-
-  const [thepage, setThepage] = useState();
-
-  const handleResize = () => {
-    // iPhone X width, for example
-    if (window.innerWidth <= 375) {
-      setSideNavExpanded(false);
+  const refreshPage = () => {
+    if (Cookies.get('access_token')) {
+      setPage (<Page refreshPage={refreshPage}/>);
+    } else {
+      setPage (<Login refreshPage={refreshPage}/>);
     }
   }
 
-  const changeContent = (page) => {
-    const components = {
-      companies: CompaniesList,
-      capital: CapitalHistoryList,
-      logout: Logout
-    }
+  useEffect(() => { refreshPage() }, []);
 
-    const MainContent = components[page];
-    setContent(<MainContent content={page} ShowPage={ShowPage}/>)
-  }
-
-  const ShowPage = () => {
-    if (!Cookies.get('access_token')){
-      setThepage(
-<>
-        <Box style={contentStyle}>
-          <Login ShowPage={ShowPage}/>
-        </Box>
-      </>
-        );
-    }
-  }
-
-  useEffect(() => {
-    ShowPage();
-    setCookie(Cookies.get());
-    window.addEventListener("resize", handleResize);
-    handleResize(); // on-component-mount, check already to see if user has a small device
-
-    return () => {
-      window.removeEventListener("resize", handleResize);
-    };
-  }, []); // initialize event listeners on-mount & clean on-unmount
-
-  const contentStyle = {
-    marginLeft: sideNavExpanded ? "250px" : "70px", // arbitrary values
-    transition: "margin 0.2s ease"
-  };
-  console.log('base page')
-  console.log(cookie)
-return (
-  <Router>
-    {
-      (Cookies.get('access_token')) &&
-        <Nav
-          setSideNavExpanded={setSideNavExpanded}
-          sideNavExpanded={sideNavExpanded}
-          changeContent={changeContent}
-          ShowPage={ShowPage}
-        />
-    }
-    <Box style={contentStyle}>
-          { content }
-        </Box>
-    {thepage}
-  </Router>
-  );
+  return (<>{ page }</>);
 }
 
 if (document.getElementById('mainapp')) {
