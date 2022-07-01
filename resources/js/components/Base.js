@@ -25,6 +25,8 @@ export default function Base() {
 
   const [cookie, setCookie] = useState({});
 
+  const [thepage, setThepage] = useState();
+
   const handleResize = () => {
     // iPhone X width, for example
     if (window.innerWidth <= 375) {
@@ -41,9 +43,33 @@ export default function Base() {
 
     const MainContent = components[page];
     setContent(<MainContent content={page}/>)
-  } 
+  }
+
+  const ShowPage = () => {
+    if (Cookies.get('access_token')) {
+      setThepage(
+<>
+        <Nav
+          setSideNavExpanded={setSideNavExpanded}
+          sideNavExpanded={sideNavExpanded}
+          changeContent={changeContent}
+        />
+        
+      </>
+      );
+    } else {
+      setThepage(
+<>
+        <Box style={contentStyle}>
+          <Login />
+        </Box>
+      </>
+        );
+    }
+  }
 
   useEffect(() => {
+    ShowPage();
     setCookie(Cookies.get());
     window.addEventListener("resize", handleResize);
     handleResize(); // on-component-mount, check already to see if user has a small device
@@ -57,33 +83,14 @@ export default function Base() {
     marginLeft: sideNavExpanded ? "250px" : "70px", // arbitrary values
     transition: "margin 0.2s ease"
   };
+  console.log('base page')
   console.log(cookie)
 return (
   <Router>
-    {
-      (Cookies.get('access_token')) &&
-      <>
-        <Nav
-          setSideNavExpanded={setSideNavExpanded}
-          sideNavExpanded={sideNavExpanded}
-          changeContent={changeContent}
-        />
-        <Box style={contentStyle}>
+    <Box style={contentStyle}>
           { content }
         </Box>
-      </>
-    }
-
-    {
-      (!Cookies.get('access_token')) &&
-      <>
-        <Box style={contentStyle}>
-          <Login />
-        </Box>
-      </>
-    }
-    
-
+    {thepage}
   </Router>
   );
 }

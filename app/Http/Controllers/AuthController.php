@@ -99,4 +99,9 @@ class AuthController extends Controller
             'user' => auth()->user()
         ]);
     }
+
+    public function list()
+    {
+        echo 'list';
+    }
 }

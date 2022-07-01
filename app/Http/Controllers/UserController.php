@@ -12,27 +12,23 @@ use Illuminate\Support\Facades\Auth;
 use Validator;
 use Cookie;
 
+
 use App\Http\Controllers\AuthController;
 
 class UserController extends Controller
 {
-    public function login()
-    {
-        return view('login');
+    public function __construct() {
+        $this->middleware('auth:api', ['except' => ['login']]);
     }
 
-    public function loginsubmit(Request $request)
+    public function list()
     {
-
+        //restricted
+        echo "list";
     }
 
-    public function registration()
+    public function login(Request $request)
     {
-
-    }
-
-    protected function createNewToken($token)
-    {
-
+        //allowed
     }
 }

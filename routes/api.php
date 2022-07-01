@@ -3,6 +3,7 @@
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\UserController;
 
 /*
 |--------------------------------------------------------------------------
@@ -28,4 +29,11 @@ Route::group([
     Route::post('/logout', [AuthController::class, 'logout']);
     Route::post('/refresh', [AuthController::class, 'refresh']);
     Route::post('/user-profile', [AuthController::class, 'userProfile']);
+});
+
+Route::group([
+    'middleware' => 'api',
+    'prefix' => 'user'
+], function ($router){
+    Route::post('/list', [UserController::class, 'list']);
 });
