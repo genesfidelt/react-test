@@ -8,9 +8,7 @@ import axios from 'axios';
 
 import Cookies from "js-cookie";
 
-export default function Login() {
-
-    
+export default function Login({ShowPage}) {
 
     return (
         <Formik
@@ -20,16 +18,16 @@ export default function Login() {
           })}
    
           onSubmit={(values, { setSubmitting }) => {
-            alert(JSON.stringify(values, null, 2));
+            console.log(JSON.stringify(values, null, 2));
             axios.post(
                 '/api/auth/login',
                 values,
                 { headers: { 'content-type':'application/json' } }
             )
                 .then((response) => {
-                    console.log('works');
                     console.log(response.data);
                     Cookies.set('access_token', response.data.access_token, { expires: 7 })
+                    ShowPage();
                 })
           }}
         >

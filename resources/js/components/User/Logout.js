@@ -8,7 +8,7 @@ import axios from 'axios';
 
 import Cookies from "js-cookie";
 
-export default function Login() {
+export default function Logout({ShowPage}) {
 
     useEffect(() => {
         console.log('logout token');
@@ -24,8 +24,9 @@ export default function Login() {
             } }
         ).then((response) => {
             console.log(response)
+            Cookies.remove('access_token');
+            ShowPage();
         });
-        Cookies.remove('access_token');
       });
 
     return (

@@ -14054,7 +14054,8 @@ function Base() {
     };
     var MainContent = components[page];
     setContent( /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_9__.jsx)(MainContent, {
-      content: page
+      content: page,
+      ShowPage: ShowPage
     }));
   };
 
@@ -14064,14 +14065,17 @@ function Base() {
         children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_9__.jsx)(_Nav__WEBPACK_IMPORTED_MODULE_4__["default"], {
           setSideNavExpanded: setSideNavExpanded,
           sideNavExpanded: sideNavExpanded,
-          changeContent: changeContent
+          changeContent: changeContent,
+          ShowPage: ShowPage
         })
       }));
     } else {
       setThepage( /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_9__.jsx)(react_jsx_runtime__WEBPACK_IMPORTED_MODULE_9__.Fragment, {
         children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_9__.jsx)(_mui_material_Box__WEBPACK_IMPORTED_MODULE_10__["default"], {
           style: contentStyle,
-          children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_9__.jsx)(_User_Login__WEBPACK_IMPORTED_MODULE_7__["default"], {})
+          children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_9__.jsx)(_User_Login__WEBPACK_IMPORTED_MODULE_7__["default"], {
+            ShowPage: ShowPage
+          })
         })
       }));
     }
@@ -14209,7 +14213,8 @@ function _arrayWithHoles(arr) { if (Array.isArray(arr)) return arr; }
 function SideBar(_ref) {
   var sideNavExpanded = _ref.sideNavExpanded,
       setSideNavExpanded = _ref.setSideNavExpanded,
-      changeContent = _ref.changeContent;
+      changeContent = _ref.changeContent,
+      ShowPage = _ref.ShowPage;
 
   var _useState = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)([]),
       _useState2 = _slicedToArray(_useState, 2),
@@ -14313,26 +14318,27 @@ __webpack_require__.r(__webpack_exports__);
 
 
 
-function Login() {
+function Login(_ref) {
+  var ShowPage = _ref.ShowPage;
   return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsx)(formik__WEBPACK_IMPORTED_MODULE_2__.Formik, {
     initialValues: {
       password: '',
       email: ''
     },
     validationSchema: yup__WEBPACK_IMPORTED_MODULE_3__.object({}),
-    onSubmit: function onSubmit(values, _ref) {
-      var setSubmitting = _ref.setSubmitting;
-      alert(JSON.stringify(values, null, 2));
+    onSubmit: function onSubmit(values, _ref2) {
+      var setSubmitting = _ref2.setSubmitting;
+      console.log(JSON.stringify(values, null, 2));
       axios__WEBPACK_IMPORTED_MODULE_4___default().post('/api/auth/login', values, {
         headers: {
           'content-type': 'application/json'
         }
       }).then(function (response) {
-        console.log('works');
         console.log(response.data);
         js_cookie__WEBPACK_IMPORTED_MODULE_5__["default"].set('access_token', response.data.access_token, {
           expires: 7
         });
+        ShowPage();
       });
     },
     children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsxs)(formik__WEBPACK_IMPORTED_MODULE_2__.Form, {
@@ -14371,7 +14377,7 @@ function Login() {
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   "default": () => (/* binding */ Login)
+/* harmony export */   "default": () => (/* binding */ Logout)
 /* harmony export */ });
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
 /* harmony import */ var react_dom__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! react-dom */ "./node_modules/react-dom/index.js");
@@ -14390,7 +14396,8 @@ __webpack_require__.r(__webpack_exports__);
 
 
 
-function Login() {
+function Logout(_ref) {
+  var ShowPage = _ref.ShowPage;
   (0,react__WEBPACK_IMPORTED_MODULE_0__.useEffect)(function () {
     console.log('logout token');
     console.log(js_cookie__WEBPACK_IMPORTED_MODULE_5__["default"].get('access_token'));
@@ -14402,8 +14409,9 @@ function Login() {
       }
     }).then(function (response) {
       console.log(response);
+      js_cookie__WEBPACK_IMPORTED_MODULE_5__["default"].remove('access_token');
+      ShowPage();
     });
-    js_cookie__WEBPACK_IMPORTED_MODULE_5__["default"].remove('access_token');
   });
   return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsx)(react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.Fragment, {});
 }

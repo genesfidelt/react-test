@@ -42,7 +42,7 @@ export default function Base() {
     }
 
     const MainContent = components[page];
-    setContent(<MainContent content={page}/>)
+    setContent(<MainContent content={page} ShowPage={ShowPage}/>)
   }
 
   const ShowPage = () => {
@@ -53,6 +53,7 @@ export default function Base() {
           setSideNavExpanded={setSideNavExpanded}
           sideNavExpanded={sideNavExpanded}
           changeContent={changeContent}
+          ShowPage={ShowPage}
         />
         
       </>
@@ -61,7 +62,7 @@ export default function Base() {
       setThepage(
 <>
         <Box style={contentStyle}>
-          <Login />
+          <Login ShowPage={ShowPage}/>
         </Box>
       </>
         );

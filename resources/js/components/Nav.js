@@ -12,7 +12,7 @@ import "@trendmicro/react-sidenav/dist/react-sidenav.css";
 import AccessAlarmIcon from '@mui/icons-material/AccessAlarm';
 import ListItemIcon from '@mui/material/ListItemIcon';
 
-export default function SideBar ({ sideNavExpanded, setSideNavExpanded, changeContent }) {
+export default function SideBar ({ sideNavExpanded, setSideNavExpanded, changeContent, ShowPage }) {
 
   const [ navList, setNavList ] = useState([]);
   const [ selectedNav, setSelectedNav ] = useState("");
@@ -29,8 +29,10 @@ export default function SideBar ({ sideNavExpanded, setSideNavExpanded, changeCo
   const handlerClickedNav = (e) => {
     if (e.target.id === "") { return }
     const page = e.target.id.split('-')[1];
+    
     setSelectedNav(page);
     changeContent(page);
+    
   }
 
   useEffect(() => {
