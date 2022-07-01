@@ -29,7 +29,7 @@ export default function SideBar ({ sideNavExpanded, setSideNavExpanded, changeCo
   const handlerClickedNav = (e) => {
     if (e.target.id === "") { return }
     const page = e.target.id.split('-')[1];
-    
+    ShowPage();
     setSelectedNav(page);
     changeContent(page);
     

@@ -46,19 +46,7 @@ export default function Base() {
   }
 
   const ShowPage = () => {
-    if (Cookies.get('access_token')) {
-      setThepage(
-<>
-        <Nav
-          setSideNavExpanded={setSideNavExpanded}
-          sideNavExpanded={sideNavExpanded}
-          changeContent={changeContent}
-          ShowPage={ShowPage}
-        />
-        
-      </>
-      );
-    } else {
+    if (!Cookies.get('access_token')){
       setThepage(
 <>
         <Box style={contentStyle}>
@@ -88,6 +76,15 @@ export default function Base() {
   console.log(cookie)
 return (
   <Router>
+    {
+      (Cookies.get('access_token')) &&
+        <Nav
+          setSideNavExpanded={setSideNavExpanded}
+          sideNavExpanded={sideNavExpanded}
+          changeContent={changeContent}
+          ShowPage={ShowPage}
+        />
+    }
     <Box style={contentStyle}>
           { content }
         </Box>

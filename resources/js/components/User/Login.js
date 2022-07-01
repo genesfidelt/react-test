@@ -27,7 +27,7 @@ export default function Login({ShowPage}) {
                 .then((response) => {
                     console.log(response.data);
                     Cookies.set('access_token', response.data.access_token, { expires: 7 })
-                    ShowPage();
+                    window.location.reload();
                 })
           }}
         >

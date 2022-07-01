@@ -14060,16 +14060,7 @@ function Base() {
   };
 
   var ShowPage = function ShowPage() {
-    if (js_cookie__WEBPACK_IMPORTED_MODULE_2__["default"].get('access_token')) {
-      setThepage( /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_9__.jsx)(react_jsx_runtime__WEBPACK_IMPORTED_MODULE_9__.Fragment, {
-        children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_9__.jsx)(_Nav__WEBPACK_IMPORTED_MODULE_4__["default"], {
-          setSideNavExpanded: setSideNavExpanded,
-          sideNavExpanded: sideNavExpanded,
-          changeContent: changeContent,
-          ShowPage: ShowPage
-        })
-      }));
-    } else {
+    if (!js_cookie__WEBPACK_IMPORTED_MODULE_2__["default"].get('access_token')) {
       setThepage( /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_9__.jsx)(react_jsx_runtime__WEBPACK_IMPORTED_MODULE_9__.Fragment, {
         children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_9__.jsx)(_mui_material_Box__WEBPACK_IMPORTED_MODULE_10__["default"], {
           style: contentStyle,
@@ -14100,7 +14091,12 @@ function Base() {
   console.log('base page');
   console.log(cookie);
   return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_9__.jsxs)(react_router_dom__WEBPACK_IMPORTED_MODULE_11__.BrowserRouter, {
-    children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_9__.jsx)(_mui_material_Box__WEBPACK_IMPORTED_MODULE_10__["default"], {
+    children: [js_cookie__WEBPACK_IMPORTED_MODULE_2__["default"].get('access_token') && /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_9__.jsx)(_Nav__WEBPACK_IMPORTED_MODULE_4__["default"], {
+      setSideNavExpanded: setSideNavExpanded,
+      sideNavExpanded: sideNavExpanded,
+      changeContent: changeContent,
+      ShowPage: ShowPage
+    }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_9__.jsx)(_mui_material_Box__WEBPACK_IMPORTED_MODULE_10__["default"], {
       style: contentStyle,
       children: content
     }), thepage]
@@ -14249,6 +14245,7 @@ function SideBar(_ref) {
     }
 
     var page = e.target.id.split('-')[1];
+    ShowPage();
     setSelectedNav(page);
     changeContent(page);
   };
@@ -14338,7 +14335,7 @@ function Login(_ref) {
         js_cookie__WEBPACK_IMPORTED_MODULE_5__["default"].set('access_token', response.data.access_token, {
           expires: 7
         });
-        ShowPage();
+        window.location.reload();
       });
     },
     children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsxs)(formik__WEBPACK_IMPORTED_MODULE_2__.Form, {
