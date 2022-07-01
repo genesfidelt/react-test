@@ -2,7 +2,7 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import { useState, useEffect } from "react";
 
-import cookies from "js-cookie";
+import Cookies from "js-cookie";
 
 import Box from '@mui/material/Box';
 
@@ -14,6 +14,8 @@ import axios from 'axios';
 import Nav from './Nav';
 import CapitalHistoryList from './CapitalHistory/CapitalHistoryList';
 import CompaniesList from './Companies/CompaniesList';
+import Login from './User/Login';
+import Logout from './User/Logout';
 
 export default function Base() {
     
@@ -34,6 +36,7 @@ export default function Base() {
     const components = {
       companies: CompaniesList,
       capital: CapitalHistoryList,
+      logout: Logout
     }
 
     const MainContent = components[page];
@@ -41,7 +44,7 @@ export default function Base() {
   } 
 
   useEffect(() => {
-    setCookie(cookies.get());
+    setCookie(Cookies.get());
     window.addEventListener("resize", handleResize);
     handleResize(); // on-component-mount, check already to see if user has a small device
 
@@ -54,19 +57,32 @@ export default function Base() {
     marginLeft: sideNavExpanded ? "250px" : "70px", // arbitrary values
     transition: "margin 0.2s ease"
   };
-  console.log('cookie');
   console.log(cookie)
 return (
   <Router>
+    {
+      (Cookies.get('access_token')) &&
+      <>
+        <Nav
+          setSideNavExpanded={setSideNavExpanded}
+          sideNavExpanded={sideNavExpanded}
+          changeContent={changeContent}
+        />
+        <Box style={contentStyle}>
+          { content }
+        </Box>
+      </>
+    }
 
-    <Nav
-      setSideNavExpanded={setSideNavExpanded}
-      sideNavExpanded={sideNavExpanded}
-      changeContent={changeContent}
-    />
-    <Box style={contentStyle}>
-      { content }
-    </Box>
+    {
+      (!Cookies.get('access_token')) &&
+      <>
+        <Box style={contentStyle}>
+          <Login />
+        </Box>
+      </>
+    }
+    
 
   </Router>
   );

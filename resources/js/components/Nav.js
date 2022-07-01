@@ -21,6 +21,7 @@ export default function SideBar ({ sideNavExpanded, setSideNavExpanded, changeCo
     const nav = [
       { 'label': 'Capital', 'id': 'capital', 'access': 4 },
       { 'label': 'Companies', 'id': 'companies', 'access': 1 },
+      { 'label': 'Log Out', 'id': 'logout', 'access': 1 },
     ];
     return nav;
   };
