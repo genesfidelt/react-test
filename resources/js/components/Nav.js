@@ -10,7 +10,7 @@ import SideNav, {
 import "@trendmicro/react-sidenav/dist/react-sidenav.css";
 import Cookies from "js-cookie";
 import AccessAlarmIcon from '@mui/icons-material/AccessAlarm';
-import ListItemIcon from '@mui/material/ListItemIcon';
+import { Divider } from '@mui/material';
 import axios from 'axios';
 
 export default function SideBar ({ sideNavExpanded, setSideNavExpanded, changeContent, refreshPage }) {
@@ -22,7 +22,6 @@ export default function SideBar ({ sideNavExpanded, setSideNavExpanded, changeCo
     const nav = [
       { 'label': 'Capital', 'id': 'capital', 'access': 4 },
       { 'label': 'Companies', 'id': 'companies', 'access': 1 },
-
     ];
     return nav;
   };
@@ -32,7 +31,8 @@ export default function SideBar ({ sideNavExpanded, setSideNavExpanded, changeCo
     if (e.target.id === "") { return }
     const page = e.target.id.split('-')[1];
     console.log(page);
-    setSelectedNav(page);
+    console.log(selectedNav);
+    setSelectedNav('item-' + page);
     changeContent(page);
     
   }
@@ -68,12 +68,13 @@ export default function SideBar ({ sideNavExpanded, setSideNavExpanded, changeCo
         expanded={sideNavExpanded}
       >
         <SideNav.Toggle />
-        <SideNav.Nav defaultSelected={selectedNav}>
+        <SideNav.Nav defaultSelected="item-companies">
           {
             navList.map((item, index) => {
               return (
                 <NavItem
-                eventKey={item.id}
+                  key={'item-' + item.id}
+                  eventKey={item.id}
                   id={'item-' + item.id}
                   onClick={handlerClickedNav}
                 >
@@ -85,6 +86,7 @@ export default function SideBar ({ sideNavExpanded, setSideNavExpanded, changeCo
               );
             })
           }
+          <Divider />
           <NavItem
                 eventKey='logout'
                   id='item-logout'

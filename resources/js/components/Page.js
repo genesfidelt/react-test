@@ -9,7 +9,7 @@ import CapitalHistoryList from './CapitalHistory/CapitalHistoryList';
 import CompaniesList from './Companies/CompaniesList';
 
 
-export default function Page({refreshPage}) {
+export default function Page({ refreshPage }) {
     const [content, setContent] = useState();
 
     const [sideNavExpanded, setSideNavExpanded] = useState(true);
