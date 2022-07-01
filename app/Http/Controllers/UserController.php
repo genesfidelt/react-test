@@ -21,8 +21,10 @@ class UserController extends Controller
         $this->middleware('auth:api', ['except' => ['login']]);
     }
 
-    public function list()
+    public function log(Request $request)
     {
+
+        return response()->json(['message' => 'works']);
         //restricted
         echo "list";
     }
@@ -30,5 +32,10 @@ class UserController extends Controller
     public function login(Request $request)
     {
         //allowed
+    }
+
+    protected function checkExistingLog()
+    {
+        
     }
 }

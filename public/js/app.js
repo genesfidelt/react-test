@@ -30336,6 +30336,24 @@ var useStyles = (0,_material_ui_core_styles__WEBPACK_IMPORTED_MODULE_6__["defaul
 function Login(_ref) {
   var refreshPage = _ref.refreshPage;
   var classes = useStyles();
+
+  var logUser = function logUser(data) {
+    // we should log user data for the ff info
+    // >last login
+    // >token value
+    // >possibly IP
+    // this is for comparing their session/cookie values
+    axios__WEBPACK_IMPORTED_MODULE_3___default().post('/api/user/log', data, {
+      headers: {
+        'content-type': 'application/json',
+        'Accept': 'application/json',
+        'Authorization': 'Bearer ' + js_cookie__WEBPACK_IMPORTED_MODULE_4__["default"].get('access_token')
+      }
+    }).then(function (response) {
+      console.log(response.data);
+    });
+  };
+
   return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)(formik__WEBPACK_IMPORTED_MODULE_1__.Formik, {
     initialValues: {
       password: '',
@@ -30356,6 +30374,7 @@ function Login(_ref) {
         js_cookie__WEBPACK_IMPORTED_MODULE_4__["default"].set('access_token', response.data.access_token, {
           expires: 7
         });
+        logUser(response.data);
         refreshPage();
       });
     },
@@ -30509,11 +30528,6 @@ function SideBar(_ref) {
       navList = _useState2[0],
       setNavList = _useState2[1];
 
-  var _useState3 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(""),
-      _useState4 = _slicedToArray(_useState3, 2),
-      selectedNav = _useState4[0],
-      setSelectedNav = _useState4[1];
-
   var createNavList = function createNavList() {
     var nav = [{
       'label': 'Capital',
@@ -30534,8 +30548,6 @@ function SideBar(_ref) {
 
     var page = e.target.id.split('-')[1];
     console.log(page);
-    console.log(selectedNav);
-    setSelectedNav('item-' + page);
     changeContent(page);
   };
 
@@ -30556,7 +30568,6 @@ function SideBar(_ref) {
   (0,react__WEBPACK_IMPORTED_MODULE_0__.useEffect)(function () {
     var list = createNavList();
     setNavList(list);
-    setSelectedNav(list[0].id);
   }, []);
   return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)(react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.Fragment, {
     children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsxs)((_trendmicro_react_sidenav__WEBPACK_IMPORTED_MODULE_1___default()), {
@@ -30565,7 +30576,7 @@ function SideBar(_ref) {
       },
       expanded: sideNavExpanded,
       children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)((_trendmicro_react_sidenav__WEBPACK_IMPORTED_MODULE_1___default().Toggle), {}), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsxs)((_trendmicro_react_sidenav__WEBPACK_IMPORTED_MODULE_1___default().Nav), {
-        defaultSelected: "item-companies",
+        defaultSelected: " ",
         children: [navList.map(function (item, index) {
           return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsxs)(_trendmicro_react_sidenav__WEBPACK_IMPORTED_MODULE_1__.NavItem, {
             eventKey: item.id,

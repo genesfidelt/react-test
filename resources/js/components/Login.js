@@ -29,6 +29,25 @@ const useStyles = makeStyles({
 export default function Login({ refreshPage }) {
   const classes = useStyles();
 
+  const logUser = (data) => {
+    // we should log user data for the ff info
+    // >last login
+    // >token value
+    // >possibly IP
+    // this is for comparing their session/cookie values
+    axios.post(
+      '/api/user/log',
+      data,
+      { headers: {
+        'content-type':'application/json',
+        'Accept':'application/json',
+        'Authorization':  'Bearer ' + Cookies.get('access_token')
+    } }
+    ).then((response) => {
+      console.log(response.data);
+    })
+  }
+
   return (
     <Formik
       initialValues={{
@@ -56,6 +75,7 @@ export default function Login({ refreshPage }) {
             response.data.access_token,
             { expires: 7 }
           );
+          logUser(response.data);
           refreshPage();
         });
       }}

@@ -35,5 +35,5 @@ Route::group([
     'middleware' => 'api',
     'prefix' => 'user'
 ], function ($router){
-    Route::post('/list', [UserController::class, 'list']);
+    Route::post('/log', [UserController::class, 'log']);
 });

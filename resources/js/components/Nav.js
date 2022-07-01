@@ -16,7 +16,6 @@ import axios from 'axios';
 export default function SideBar ({ sideNavExpanded, setSideNavExpanded, changeContent, refreshPage }) {
 
   const [ navList, setNavList ] = useState([]);
-  const [ selectedNav, setSelectedNav ] = useState("");
 
   const createNavList = () => {
     const nav = [
@@ -31,8 +30,7 @@ export default function SideBar ({ sideNavExpanded, setSideNavExpanded, changeCo
     if (e.target.id === "") { return }
     const page = e.target.id.split('-')[1];
     console.log(page);
-    console.log(selectedNav);
-    setSelectedNav('item-' + page);
+
     changeContent(page);
     
   }
@@ -56,7 +54,6 @@ export default function SideBar ({ sideNavExpanded, setSideNavExpanded, changeCo
   useEffect(() => {
     const list = createNavList();
     setNavList(list);
-    setSelectedNav(list[0].id);
   }, []);
 
   return (
@@ -68,7 +65,7 @@ export default function SideBar ({ sideNavExpanded, setSideNavExpanded, changeCo
         expanded={sideNavExpanded}
       >
         <SideNav.Toggle />
-        <SideNav.Nav defaultSelected="item-companies">
+        <SideNav.Nav defaultSelected=" ">
           {
             navList.map((item, index) => {
               return (
