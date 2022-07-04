@@ -13,11 +13,16 @@ import AccessAlarmIcon from '@mui/icons-material/AccessAlarm';
 import { Divider } from '@mui/material';
 import axios from 'axios';
 
+import { sayHello } from './Base';
+import { useRecoilState } from "recoil";
+
 import api from '../config/apisauce';
 
-const SideBar = ({ sideNavExpanded, setSideNavExpanded, changeContent, refreshPage }) => {
+const SideBar = ({ sideNavExpanded, setSideNavExpanded, changeContent }) => {
 
   const [ navList, setNavList ] = useState([]);
+
+  const [todoList, setToDo] = useRecoilState(sayHello);
 
   const createNavList = () => {
     const nav = [
@@ -50,7 +55,7 @@ const SideBar = ({ sideNavExpanded, setSideNavExpanded, changeContent, refreshPa
   ).then((response) => {
       console.log(response)
       Cookies.remove('access_token');
-      refreshPage();
+      todoList();
   });
   }
 

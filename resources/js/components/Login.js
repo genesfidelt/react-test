@@ -58,6 +58,7 @@ const Login = ({ refreshPage }) => {
         })
       }
       onSubmit={(values, { setSubmitting }) => {
+        console.log(values);
         api.post(
           '/api/auth/login',
           values,

@@ -4,23 +4,36 @@ import ReactDOM from 'react-dom';
 import Cookies from 'js-cookie'
 import axios from 'axios';
 
-import { RecoilRoot, atom } from "recoil";
+import { RecoilRoot, atom, useRecoilState } from "recoil";
 
 import Login from './Login';
 import Page from './Page';
 
-export const todoListAtom = atom({
-  key: 'todoListState',
-  default: "this is the default value",
+const sayHi = () => {
+  console.log('hi!');
+}
+
+
+export const sayHello = atom({
+  key: 'sayHello',
+  //default: (() => { console.log('hello!')})(),
+  //default: sayHi() //works as long as function is above
+  //default: 'hi'
+  default: {}
 });
+
+
 
 const Base = () => {
 
-
-
   const [ page, setPage ] = useState();
 
+  const insideHi = () => {
+    console.log('hi from inside')
+  }
+
   const refreshPage = () => {
+
     if (Cookies.get('access_token')) {
       setPage (<Page refreshPage={refreshPage}/>);
     } else {
@@ -29,7 +42,7 @@ const Base = () => {
   }
 
   useEffect(() => { refreshPage() }, []);
-
+  
   return (<><RecoilRoot>{ page }</RecoilRoot></>);
 }
 export default Base;

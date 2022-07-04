@@ -4,7 +4,9 @@ import Grid from '@mui/material/Grid';
 
 const CompaniesList = () => {
     return (
-        <h3>Companies Page</h3>
+
+            <h3>Companies Page</h3>
+
     );
 }
 export default CompaniesList;
