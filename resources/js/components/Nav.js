@@ -32,6 +32,7 @@ const SideBar = ({ sideNavExpanded, setSideNavExpanded, changeContent, refreshPa
     if (e.target.id === "") { return }
     const page = e.target.id.split('-')[1];
     console.log(page);
+    console.log('page change');
 
     changeContent(page);
     

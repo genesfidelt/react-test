@@ -1,3 +1,4 @@
+import { AirplanemodeActive } from '@material-ui/icons';
 import { create } from 'apisauce';
 
 const api = create({
@@ -6,5 +7,7 @@ const api = create({
         'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content')
     },
 });
+
+export const loginUser = () => api.post('/api/auth/login');
 
 export default api;

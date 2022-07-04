@@ -4,10 +4,19 @@ import ReactDOM from 'react-dom';
 import Cookies from 'js-cookie'
 import axios from 'axios';
 
+import { RecoilRoot, atom } from "recoil";
+
 import Login from './Login';
 import Page from './Page';
 
+export const todoListAtom = atom({
+  key: 'todoListState',
+  default: "this is the default value",
+});
+
 const Base = () => {
+
+
 
   const [ page, setPage ] = useState();
 
@@ -21,7 +30,7 @@ const Base = () => {
 
   useEffect(() => { refreshPage() }, []);
 
-  return (<>{ page }</>);
+  return (<><RecoilRoot>{ page }</RecoilRoot></>);
 }
 export default Base;
 

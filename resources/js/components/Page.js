@@ -2,6 +2,9 @@ import { lazy, React, Suspense } from 'react';
 import ReactDOM from 'react-dom';
 import { BrowserRouter, Routes, Route, Link } from 'react-router-dom';
 
+import { useRecoilState } from "recoil";
+import { todoListAtom } from './Base';
+
 import Grid from '@mui/material/Grid';
 import { useState, useEffect } from "react";
 import Box from '@mui/material/Box';
@@ -11,6 +14,8 @@ import Load from './Load';
 import PageList from './PageList';
 
 const Page = ({ refreshPage }) => {
+  const todoList = useRecoilState(todoListAtom);
+  
   const [content, setContent] = useState();
 
   const [sideNavExpanded, setSideNavExpanded] = useState(true);
@@ -53,6 +58,7 @@ const Page = ({ refreshPage }) => {
           />
           <Box style={contentStyle}>
           { content }
+          {todoList}
           </Box>
         </Suspense>
       </BrowserRouter>

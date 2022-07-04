@@ -10,6 +10,7 @@ import { makeStyles } from "@material-ui/core/styles";
 import { Card } from "@material-ui/core";
 
 import api from '../config/apisauce';
+import { loginUser } from '../config/apisauce';
 
 const useStyles = makeStyles({
   root: {
@@ -37,17 +38,8 @@ const Login = ({ refreshPage }) => {
     // >token value
     // >possibly IP
     // this is for comparing their session/cookie values
-    api.post(
-      '/api/user/log',
-      data,
-      { headers: {
-        'content-type':'application/json',
-        'Accept':'application/json',
-        'Authorization':  'Bearer ' + Cookies.get('access_token')
-    } }
-    ).then((response) => {
-      console.log(response.data);
-    })
+    const response = loginUser();
+    console.log(response.data);
   }
 
   return (
