@@ -9,6 +9,8 @@ import Cookies from "js-cookie";
 import { makeStyles } from "@material-ui/core/styles";
 import { Card } from "@material-ui/core";
 
+import api from '../config/apisauce';
+
 const useStyles = makeStyles({
   root: {
     minWidth: "100%",
@@ -26,7 +28,7 @@ const useStyles = makeStyles({
   }
 });
 
-export default function Login({ refreshPage }) {
+const Login = ({ refreshPage }) => {
   const classes = useStyles();
 
   const logUser = (data) => {
@@ -35,7 +37,7 @@ export default function Login({ refreshPage }) {
     // >token value
     // >possibly IP
     // this is for comparing their session/cookie values
-    axios.post(
+    api.post(
       '/api/user/log',
       data,
       { headers: {
@@ -64,7 +66,7 @@ export default function Login({ refreshPage }) {
         })
       }
       onSubmit={(values, { setSubmitting }) => {
-        axios.post(
+        api.post(
           '/api/auth/login',
           values,
           { headers: { 'content-type': 'application/json' }}
@@ -138,4 +140,4 @@ export default function Login({ refreshPage }) {
     </Formik>
   );
 }
-
+export default Login;

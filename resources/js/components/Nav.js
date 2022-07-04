@@ -13,7 +13,9 @@ import AccessAlarmIcon from '@mui/icons-material/AccessAlarm';
 import { Divider } from '@mui/material';
 import axios from 'axios';
 
-export default function SideBar ({ sideNavExpanded, setSideNavExpanded, changeContent, refreshPage }) {
+import api from '../config/apisauce';
+
+const SideBar = ({ sideNavExpanded, setSideNavExpanded, changeContent, refreshPage }) => {
 
   const [ navList, setNavList ] = useState([]);
 
@@ -36,7 +38,7 @@ export default function SideBar ({ sideNavExpanded, setSideNavExpanded, changeCo
   }
 
   const logout = (e) => {
-    axios.post(
+    api.post(
       '/api/auth/logout',
       {},
       { headers: {
@@ -99,3 +101,4 @@ export default function SideBar ({ sideNavExpanded, setSideNavExpanded, changeCo
     </>
   );
 };
+export default SideBar;

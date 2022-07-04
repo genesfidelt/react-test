@@ -7,7 +7,7 @@ import axios from 'axios';
 import Login from './Login';
 import Page from './Page';
 
-export default function Base() {
+const Base = () => {
 
   const [ page, setPage ] = useState();
 
@@ -23,6 +23,7 @@ export default function Base() {
 
   return (<>{ page }</>);
 }
+export default Base;
 
 if (document.getElementById('mainapp')) {
   ReactDOM.render(<Base />, document.getElementById('mainapp'));
