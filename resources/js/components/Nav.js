@@ -13,8 +13,10 @@ import AccessAlarmIcon from '@mui/icons-material/AccessAlarm';
 import { Divider } from '@mui/material';
 import axios from 'axios';
 
-import { sayHello } from './Base';
+import { quickcash } from './Globals';
 import { useRecoilState } from "recoil";
+
+import PageList from "./PageList";
 
 import api from '../config/apisauce';
 
@@ -22,13 +24,18 @@ const SideBar = ({ sideNavExpanded, setSideNavExpanded, changeContent }) => {
 
   const [ navList, setNavList ] = useState([]);
 
-  const [todoList, setToDo] = useRecoilState(sayHello);
+  const [qc, setQC] = useRecoilState(quickcash);
 
   const createNavList = () => {
-    const nav = [
-      { 'label': 'Capital', 'id': 'capital', 'access': 4 },
-      { 'label': 'Companies', 'id': 'companies', 'access': 1 },
-    ];
+    const nav = [];
+    const keys = Object.keys(PageList);
+    keys.forEach((key, index) => {
+      nav.push({
+        'label': PageList[key].label,
+        'id': PageList[key].id,
+        'access': PageList[key].permission,
+      });
+    });
     return nav;
   };
 
@@ -37,11 +44,10 @@ const SideBar = ({ sideNavExpanded, setSideNavExpanded, changeContent }) => {
     if (e.target.id === "") { return }
     const page = e.target.id.split('-')[1];
     console.log(page);
-    todoList.fresh();
+    qc.refresh();
     console.log('page change');
 
     changeContent(page);
-    
   }
 
   const logout = (e) => {
@@ -56,8 +62,7 @@ const SideBar = ({ sideNavExpanded, setSideNavExpanded, changeContent }) => {
   ).then((response) => {
       console.log(response)
       Cookies.remove('access_token');
-      //todoList();
-      todoList.fresh();
+      qc.refresh();
   });
   }
 

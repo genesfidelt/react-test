@@ -3,7 +3,7 @@ import ReactDOM from 'react-dom';
 import { BrowserRouter, Routes, Route, Link } from 'react-router-dom';
 
 import { useRecoilState } from "recoil";
-import { sayHello } from './Base';
+import { quickcash } from './Globals';
 
 import Grid from '@mui/material/Grid';
 import { useState, useEffect } from "react";
@@ -14,7 +14,7 @@ import Load from './Load';
 import PageList from './PageList';
 
 const Page = ({ refreshPage }) => {
-  const [todoList, setToDo] = useRecoilState(sayHello);
+  const [qc, setQC] = useRecoilState(quickcash);
   
   const [content, setContent] = useState();
 
@@ -30,17 +30,13 @@ const Page = ({ refreshPage }) => {
   const changeContent = (page) => {
     const MainContent = PageList[page].component;
     setContent(<MainContent content={page} />)
-    refreshPage();
-
-    console.log(todoList);
-    //setToDo('hello');
-    //console.log(todoList);
+    qc.refresh();
   }
 
   useEffect(() => {
     window.addEventListener("resize", handleResize);
     handleResize(); // on-component-mount, check already to see if user has a small device
-    setToDo({fresh: refreshPage});
+    setQC({refresh: refreshPage});
     
     return () => {
       window.removeEventListener("resize", handleResize);
@@ -66,7 +62,6 @@ const Page = ({ refreshPage }) => {
           />
           <Box style={contentStyle}>
           { content }
-
           </Box>
         </Suspense>
       </BrowserRouter>

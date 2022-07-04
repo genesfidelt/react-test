@@ -45,8 +45,8 @@ const Login = ({ refreshPage }) => {
   return (
     <Formik
       initialValues={{
-        password: '',
-        email: '',
+        email: 'admin@mail.com',
+        password: '1q2w3e4rr',
       }}
       validationSchema={
         Yup.object({
@@ -58,7 +58,8 @@ const Login = ({ refreshPage }) => {
         })
       }
       onSubmit={(values, { setSubmitting }) => {
-        console.log(values);
+        const result = loginUser();
+        console.log(result);
         api.post(
           '/api/auth/login',
           values,
@@ -72,6 +73,9 @@ const Login = ({ refreshPage }) => {
           );
           logUser(response.data);
           refreshPage();
+        }).catch((error) => {
+          console.log('error');
+          console.log(error);
         });
       }}
     >
