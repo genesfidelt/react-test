@@ -32,7 +32,7 @@ const Page = ({ refreshPage }) => {
     setContent(<MainContent content={page} />)
     refreshPage();
 
-    //console.log(todoList());
+    console.log(todoList);
     //setToDo('hello');
     //console.log(todoList);
   }
@@ -40,12 +40,12 @@ const Page = ({ refreshPage }) => {
   useEffect(() => {
     window.addEventListener("resize", handleResize);
     handleResize(); // on-component-mount, check already to see if user has a small device
-
+    setToDo({fresh: refreshPage});
     
     return () => {
       window.removeEventListener("resize", handleResize);
     };
-    setToDo(refreshPage);
+    
     
   }, []); // initialize event listeners on-mount & clean on-unmount
 

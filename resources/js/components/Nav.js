@@ -37,6 +37,7 @@ const SideBar = ({ sideNavExpanded, setSideNavExpanded, changeContent }) => {
     if (e.target.id === "") { return }
     const page = e.target.id.split('-')[1];
     console.log(page);
+    todoList.fresh();
     console.log('page change');
 
     changeContent(page);
@@ -55,7 +56,8 @@ const SideBar = ({ sideNavExpanded, setSideNavExpanded, changeContent }) => {
   ).then((response) => {
       console.log(response)
       Cookies.remove('access_token');
-      todoList();
+      //todoList();
+      todoList.fresh();
   });
   }
 
